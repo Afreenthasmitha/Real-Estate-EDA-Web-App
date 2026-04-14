@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real Estate Dashboard</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Styling -->
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .filters {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        canvas {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏠 Real Estate Analytics Dashboard</h1>
+</header>
+
+<div class="container">
+
+    <!-- Filters -->
+    <div class="filters card">
+        <h3>Filter Properties</h3>
+        <input type="number" id="minPrice" placeholder="Min Price">
+        <input type="number" id="maxPrice" placeholder="Max Price">
+        <button onclick="applyFilter()">Apply Filter</button>
+    </div>
+
+    <!-- Charts -->
+    <div class="card">
+        <h3>Price vs Area</h3>
+        <canvas id="lineChart"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Price Distribution</h3>
+        <canvas id="barChart"></canvas>
+    </div>
+
+</div>
+
+<script>
+
+let lineChart, barChart;
+
+// Load Data
+function loadData(url = "http://127.0.0.1:5000/data") {
+    fetch(url)
+    .then(res => res.json())
+    .then(data => {
+
+        const prices = data.map(d => d.price);
+        const areas = data.map(d => d.area);
+
+        // Destroy old charts
+        if (lineChart) lineChart.destroy();
+        if (barChart) barChart.destroy();
+
+        // Line Chart
+        const ctx1 = document.getElementById("lineChart").getContext("2d");
+        lineChart = new Chart(ctx1, {
+            type: "line",
+            data: {
+                labels: areas,
+                datasets: [{
+                    label: "Price vs Area",
+                    data: prices,
+                    borderWidth: 2,
+                    fill: false
+                }]
+            }
+        });
+
+        // Bar Chart
+        const ctx2 = document.getElementById("barChart").getContext("2d");
+        barChart = new Chart(ctx2, {
+            type: "bar",
+            data: {
+                labels: areas,
+                datasets: [{
+                    label: "Price Distribution",
+                    data: prices,
+                    borderWidth: 1
+                }]
+            }
+        });
+
+    })
+    .catch(err => console.error("Error:", err));
+}
+
+// Apply Filter
+function applyFilter() {
+    const min = document.getElementById("minPrice").value || 0;
+    const max = document.getElementById("maxPrice").value || 1000000;
+
+    const url = `http://127.0.0.1:5000/filter?min_price=${min}&max_price=${max}`;
+    loadData(url);
+}
+
+// Initial Load
+loadData();
+
+</script>
+
+</body>
+</html>
