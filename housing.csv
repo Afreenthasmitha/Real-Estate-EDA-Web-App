@@ -1,0 +1,16 @@
+id,price,area,bedrooms,bathrooms,floors,location,year_built,parking,near_school,near_hospital
+1,200000,1200,2,1,1,Urban,2010,1,Yes,Yes
+2,350000,1500,3,2,2,Urban,2015,2,Yes,Yes
+3,500000,2000,4,3,2,Urban,2018,2,Yes,Yes
+4,150000,1000,2,1,1,Rural,2005,1,No,No
+5,250000,1300,3,2,1,Suburban,2012,1,Yes,Yes
+6,450000,1800,4,3,2,Urban,2017,2,Yes,Yes
+7,300000,1400,3,2,1,Suburban,2014,1,Yes,Yes
+8,600000,2200,5,4,3,Urban,2020,3,Yes,Yes
+9,120000,900,2,1,1,Rural,2000,0,No,No
+10,275000,1350,3,2,2,Suburban,2013,1,Yes,Yes
+11,320000,1450,3,2,2,Urban,2016,2,Yes,Yes
+12,480000,1900,4,3,2,Urban,2019,2,Yes,Yes
+13,220000,1250,2,2,1,Suburban,2011,1,Yes,Yes
+14,170000,1100,2,1,1,Rural,2008,1,No,No
+15,550000,2100,5,4,3,Urban,2021,3,Yes,Yes
